@@ -1,7 +1,7 @@
 import weather from '../data/current-weather.js'
 import { formatData, formatTemp } from './utils/format-data.js'
 import { weatherConditionCodes } from './constants.js'
-import { getCurrentPosition } from './geolocation.js'
+import { getLatLon } from './geolocation.js'
 
 function setCurrentCity($el, city) {
     $el.textContent = city
@@ -62,15 +62,23 @@ function configCurrentWeather(weather) {
     setBackground($app, conditionCode, solarStatus(sunriseTime, sunsetTime))
 }
 
-export default function currentWeather() {
+export default async function currentWeather() {
     //GEO // API - weather //Config
-    // Dato que la funcion devuelve un promesa, podeos usar then, catch
-    getCurrentPosition().then((data) => {
-            console.log("data", data)
-        })
-        .catch((message) => {
-            console.log(message)
-        })
+    // Dado que la funcion devuelve un promesa, podeos usar then, catch
+    // getCurrentPosition().then((data) => {
+    //         console.log("data", data)
+    //     })
+    //     .catch((message) => {
+    //         console.log(message)
+    //     })
+
+    // Asincronismo
+    // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function
+    const { lat, lon, isError } = await getLatLon();
+    console.log(lat, lon, isError)
+    if (isError) return console.log('Ah ocurrido un error ubicandote')
+
+
     configCurrentWeather(weather)
-    console.log(weather)
+        // console.log(weather)
 }
