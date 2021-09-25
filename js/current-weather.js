@@ -16,7 +16,7 @@ function setCurrentTemp($el, temp) {
     $el.textContent = formatTemp(temp)
 }
 
-function solarStatus(sunsetTime, sunriseTime) {
+function solarStatus(sunriseTime, sunsetTime) {
     const currentHours = new Date().getHours()
     const sunsetHours = sunsetTime.getHours()
     const sunriseHours = sunriseTime.getHours()
