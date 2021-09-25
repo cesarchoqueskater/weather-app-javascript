@@ -37,9 +37,19 @@ function setBackground($el, conditionCode, solarStatus) {
     $el.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`;
 }
 
+function showCurrentWeather($app, $loader) {
+    $app.hidden = false
+    $loader.hidden = true
+
+}
+
 function configCurrentWeather(weather) {
+    const $app = document.querySelector('#app')
+    const $loader = document.querySelector('#loading')
 
     // loader
+    showCurrentWeather($app, $loader)
+
     // date
 
     const $currentWeatherDate = document.querySelector('#current-weather-date')
@@ -58,7 +68,7 @@ function configCurrentWeather(weather) {
     // Multiplicamos por 1000, para convertirlos en milisegundos
     const sunriseTime = new Date(weather.sys.sunrise * 1000)
     const sunsetTime = new Date(weather.sys.sunset * 1000)
-    const $app = document.querySelector('#app')
+        // const $app = document.querySelector('#app')
     const conditionCode = String(weather.weather[0].id).charAt(0)
     setBackground($app, conditionCode, solarStatus(sunriseTime, sunsetTime))
 }
