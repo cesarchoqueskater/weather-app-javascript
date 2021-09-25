@@ -64,7 +64,13 @@ function configCurrentWeather(weather) {
 
 export default function currentWeather() {
     //GEO // API - weather //Config
-    getCurrentPosition()
+    // Dato que la funcion devuelve un promesa, podeos usar then, catch
+    getCurrentPosition().then((data) => {
+            console.log("data", data)
+        })
+        .catch((message) => {
+            console.log(message)
+        })
     configCurrentWeather(weather)
     console.log(weather)
 }
