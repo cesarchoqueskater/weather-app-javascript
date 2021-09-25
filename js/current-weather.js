@@ -1,6 +1,7 @@
 import weather from '../data/current-weather.js'
 import { formatData, formatTemp } from './utils/format-data.js'
 import { weatherConditionCodes } from './constants.js'
+import { getCurrentPosition } from './geolocation.js'
 
 function setCurrentCity($el, city) {
     $el.textContent = city
@@ -29,6 +30,8 @@ function solarStatus(sunriseTime, sunsetTime) {
 
 function setBackground($el, conditionCode, solarStatus) {
     const weatherType = weatherConditionCodes[conditionCode]
+
+    // https://developer.mozilla.org/es/docs/Web/API/Window/matchMedia
     const size = window.matchMedia('(-webkit-min-device-pixel-ratio:2)').matches ? '@2x' : ''
     $el.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`;
 }
@@ -61,6 +64,7 @@ function configCurrentWeather(weather) {
 
 export default function currentWeather() {
     //GEO // API - weather //Config
+    getCurrentPosition()
     configCurrentWeather(weather)
     console.log(weather)
 }
