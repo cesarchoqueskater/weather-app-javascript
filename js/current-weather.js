@@ -1,7 +1,8 @@
-import weather from '../data/current-weather.js'
+// import weather from '../data/current-weather.js'
 import { formatData, formatTemp } from './utils/format-data.js'
 import { weatherConditionCodes } from './constants.js'
 import { getLatLon } from './geolocation.js'
+import { getCurrentWeather } from './services/weather.js'
 
 function setCurrentCity($el, city) {
     $el.textContent = city
@@ -76,9 +77,11 @@ export default async function currentWeather() {
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function
     const { lat, lon, isError } = await getLatLon();
     console.log(lat, lon, isError)
-    if (isError) return console.log('Ah ocurrido un error ubicandote')
-
-
+    if (isError) return console.log('A ocurrido un error ubicandote')
+        // Dado que es una promesa, puedo colocarle un await
+        // Renombremos el data, con weather 
+    const { isError: currentWeatherError, data: weather } = await getCurrentWeather(lat, lon)
+    if (currentWeatherError) return console.log('Oh a ocurrido un error trayendo los datos del Clima')
     configCurrentWeather(weather)
         // console.log(weather)
 }
