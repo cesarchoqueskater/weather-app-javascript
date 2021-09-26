@@ -1,5 +1,5 @@
 // import weather from '../data/current-weather.js'
-import { formatData, formatTemp } from './utils/format-data.js'
+import { formatDate, formatTemp } from './utils/format-data.js'
 import { weatherConditionCodes } from './constants.js'
 import { getLatLon } from './geolocation.js'
 import { getCurrentWeather } from './services/weather.js'
@@ -10,7 +10,7 @@ function setCurrentCity($el, city) {
 
 function setCurrentDate($el) {
     const date = new Date()
-    const formattedDate = formatData(date)
+    const formattedDate = formatDate(date)
     $el.textContent = formattedDate
 }
 
