@@ -1,9 +1,16 @@
 import { getWeeklyWeather } from './services/weather.js'
 import { getLatLon } from './geolocation.js'
 import { formatWeekList } from './utils/format-data.js'
+import { createDOM } from './utils/dom.js'
 
-function configWeeklyWeather() {
 
+function configWeeklyWeather(weeklist) {
+    const $container = document.querySelector('.weeklyWeather')
+    weeklist.forEach((item) => {
+        const $el = createDOM('<h2>Hola Mundo</h2>')
+            // $el.textContent = 'Hola Mundo'
+        $container.append($el)
+    })
 }
 
 export default async function weeklyWeather() {
@@ -13,5 +20,5 @@ export default async function weeklyWeather() {
     if (weeklyWeatherError) return console.log('Oh a ocurrido un error trayendo el pronostico del Clima')
 
     const weeklist = formatWeekList(weather.list)
-    configWeeklyWeather(weather)
+    configWeeklyWeather(weeklist)
 }
