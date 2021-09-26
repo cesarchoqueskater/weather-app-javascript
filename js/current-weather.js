@@ -86,7 +86,7 @@ export default async function currentWeather() {
     // Asincronismo
     // https://developer.mozilla.org/es/docs/Web/JavaScript/Reference/Statements/async_function
     const { lat, lon, isError } = await getLatLon();
-    console.log(lat, lon, isError)
+    // console.log(lat, lon, isError)
     if (isError) return console.log('A ocurrido un error ubicandote')
         // Dado que es una promesa, puedo colocarle un await
         // Renombremos el data, con weather 
