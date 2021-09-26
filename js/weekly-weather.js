@@ -13,6 +13,5 @@ export default async function weeklyWeather() {
     if (weeklyWeatherError) return console.log('Oh a ocurrido un error trayendo el pronostico del Clima')
 
     const weeklist = formatWeekList(weather.list)
-        // debugger
     configWeeklyWeather(weather)
 }
