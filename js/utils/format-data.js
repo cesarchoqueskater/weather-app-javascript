@@ -16,13 +16,16 @@ export function formatTemp(value) {
 }
 
 export function formatWeekList(rawData) {
-    let dayList = []
+    // const weeklist = [[],[],[],[],[]]
     const weeklist = []
+    let dayList = []
     rawData.forEach((item, index) => {
         dayList.push(item)
             // Colocamos 8, pues el rawData devuelve 40 valores y estamos queriendo usarlos entre los 5 dias que tenemos
         if ((index + 1) % 8 === 0) {
+            // Los 8 array guardados los guardamos en weeklist
             weeklist.push(dayList)
+                // Luego reseteamos para que vuelva a iniciar en 0 
             dayList = []
         }
     })
