@@ -1,6 +1,6 @@
 const defaultConfig = {
-    open: false,
-    debu: true,
+    open: true,
+    debug: true,
     animatable: true
 }
 
@@ -28,6 +28,8 @@ export default function draggable($element, config = defaultConfig) {
 
     isOpen ? open() : close()
 
+    let startY = 0
+
     $marker.addEventListener('click', handleClick)
     $marker.addEventListener('pointerdown', handlePointerDown)
 
@@ -41,31 +43,43 @@ export default function draggable($element, config = defaultConfig) {
     $marker.addEventListener('pointercancel', handlePointerCancel)
 
     //Para cuando haga click y empieze a mover
-    $marker.addEventListener('pointercancel', handlePointerMove)
+    $marker.addEventListener('pointermove', handlePointerMove)
 
-    function handlePointerMove() {
+    function handlePointerMove(event) {
         logger('Pointer Move')
+        drag(event)
     }
 
-    function handlePointerUp() {
+    function handlePointerUp(event) {
         logger('Pointer OUT')
     }
 
-    function handlePointerOut() {
+    function handlePointerOut(event) {
         logger('Pointer Out')
     }
 
-    function handlePointerCancel() {
+    function handlePointerCancel(event) {
         logger('Pointer Cancel')
     }
 
-    function handlePointerDown() {
+    function handlePointerDown(event) {
         logger('Pointer Down')
+        startDrag(event)
     }
 
     function handleClick(event) {
         logger('CLICK')
         toggle()
+    }
+
+    function pageY(event) {
+        return event.pageY || event.touches[0].pageY
+    }
+
+    function startDrag(event) {
+        isDragging = true
+        startY = pageY(event)
+        logger({ startY })
     }
 
     function toggle() {
@@ -78,7 +92,7 @@ export default function draggable($element, config = defaultConfig) {
     }
 
     function logger(message) {
-        if (config.debuge) {
+        if (config.debug) {
             console.info(message)
         }
     }
@@ -99,5 +113,14 @@ export default function draggable($element, config = defaultConfig) {
 
     function setWidgetPosition(value) {
         $element.style.marginBottom = `-${value}px`
+    }
+
+    function drag(event) {
+        const cursorY = pageY(event)
+        const movementY = cursorY - startY
+        widgetPosition = widgetPosition + movementY
+        logger(movementY)
+        startY = cursorY
+        setWidgetPosition(widgetPosition)
     }
 }
