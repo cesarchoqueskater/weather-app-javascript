@@ -42,6 +42,7 @@ function handleSelectTabClick(event) {
     $tabSelected.setAttribute('aria-selected', true)
 
     const id = $tabSelected.id
+        // debugger
     const $tabPanel = document.querySelector(`[aria-labelledby=${id}]`)
     const $tabPanelSelected = document.querySelector(`.tabPanel:not([hidden])`)
     $tabPanel.hidden = false

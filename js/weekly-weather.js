@@ -4,6 +4,7 @@ import { formatWeekList } from './utils/format-data.js'
 import { createDOM } from './utils/dom.js'
 import { createPeriodTime } from './period-time.js'
 import draggable from './draggable.js'
+import { createSummaryTime } from './summary-time.js'
 
 function tabPanelTemplate(id) {
     return `
@@ -26,15 +27,36 @@ function createTabPanel(id) {
 
 function configWeeklyWeather(weeklist) {
     const $container = document.querySelector('.tabs')
-        // const $tabs = document.querySelector('.weeklyWeather')
     weeklist.forEach((day, index) => {
         const $panel = createTabPanel(index)
         $container.append($panel)
         day.forEach((weather, indexWeather) => {
-            $panel.querySelector('.dayWeather-list').append(createPeriodTime(weather))
+            $panel.querySelector('.dayWeather-list').append(createPeriodTime(weather, indexWeather))
+            $panel.addEventListener('click', selectionWeeklyWeather)
+            $panel.append(createSummaryTime(weather, indexWeather))
         })
     })
 }
+
+function selectionWeeklyWeather(event) {
+
+    console.log("Hice Click en este : " + event.path[1].id)
+        // dayWeather-item-4
+    const $numberDayWeather = String(event.path[1].id).charAt(16)
+    const $selectionDayWeather = document.querySelector(`#dayWeather-item-${$numberDayWeather}`)
+    const $activeDayWeather = document.querySelector('.dayWeather-item[is-selected="true"]')
+
+    // Seleccionar y pintar/no pintar el .dayWeather-item
+    $activeDayWeather.removeAttribute('is-selected')
+    $selectionDayWeather.setAttribute('is-selected', true)
+
+    // Mostrar su respectivo summary de lo seleccionado
+    const $summaryInformation = document.querySelector(`#dayWeather-summary-${$numberDayWeather}`)
+    const $summaryInformationSelected = document.querySelector(`.dayWeather-summary:not([hidden])`)
+    $summaryInformation.hidden = false
+    $summaryInformationSelected.hidden = true
+}
+
 
 export default async function weeklyWeather() {
     const $container = document.querySelector('.weeklyWeather')
