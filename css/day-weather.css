@@ -1,6 +1,6 @@
-.dayWeather {
-    /* border: 1px solid red; */
-}
+/* .dayWeather {
+    border: 1px solid red;
+} */
 
 .dayWeather-list {
     display: flex;
@@ -65,4 +65,11 @@
     box-shadow: inset 0 0 0 2px var(--primary);
 } */
 
-.dayWeather-summary>* {}
+
+/* .dayWeather-summary>* {} */
+
+@media screen and (min-width:660px) {
+    .dayWeather-list {
+        justify-content: center;
+    }
+}
