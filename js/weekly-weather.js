@@ -10,7 +10,7 @@ function tabPanelTemplate(id) {
     return `
             <div class="tabPanel" tabindex="0" aria-labelledby="tab-${id}">
                 <div class="dayWeather" id="dayWeather-${id}">
-                    <ul class="dayWeather-list" id="dayWeather-list-${id}">
+                    <ul class="dayWeather-list dayWeather-${id}" id="dayWeather-list-${id}">
                     </ul>
                 </div>
             </div>
@@ -29,34 +29,37 @@ function configWeeklyWeather(weeklist) {
     const $container = document.querySelector('.tabs')
     weeklist.forEach((day, index) => {
         const $panel = createTabPanel(index)
+            // <div class="tabPanel" tabindex="0" aria-labelledby="tab-0">
+            //     <div class="dayWeather" id="dayWeather-0">
+            //         <ul class="dayWeather-list" id="dayWeather-list-0">
+            //     </div>
+            // </div>
+            // debugger
         $container.append($panel)
         day.forEach((weather, indexWeather) => {
-            $panel.querySelector('.dayWeather-list').append(createPeriodTime(weather, indexWeather))
-            $panel.addEventListener('click', selectionWeeklyWeather)
-            $panel.append(createSummaryTime(weather, indexWeather))
+            $panel.querySelector('.dayWeather-list').append(createPeriodTime(weather, indexWeather, index))
+            $panel.append(createSummaryTime(weather, indexWeather, index))
+
+            const valueIndexWeather = document.querySelector(`#dayWeather-item-${index}-${indexWeather}`)
+            valueIndexWeather.addEventListener('click', function(event) {
+                // debugger
+                console.log('Se hizo click ' + event.currentTarget.id)
+                const $activeDayWeather = document.querySelector(`#dayWeather-list-${index} li.is-selected`)
+                const $selectionDayWeather = document.querySelector(`#dayWeather-item-${index}-${indexWeather}`)
+                $activeDayWeather.classList.remove('is-selected')
+                $selectionDayWeather.classList.add('is-selected')
+
+                //Mostrar respectivo summaryWeather
+                const $summaryInformation = document.querySelector(`#dayWeather-summary-${index}-${indexWeather}`)
+                    // debugger
+                    // Aquellos que no tienen la propiedad hidden
+                const $summaryInformationSelected = document.querySelector(`.tabPanel[aria-labelledby="tab-${index}"] div.dayWeather-summary:not([hidden])`)
+                $summaryInformation.hidden = false
+                $summaryInformationSelected.hidden = true
+            })
         })
     })
 }
-
-function selectionWeeklyWeather(event) {
-
-    console.log("Hice Click en este : " + event.path[1].id)
-        // dayWeather-item-4
-    const $numberDayWeather = String(event.path[1].id).charAt(16)
-    const $selectionDayWeather = document.querySelector(`#dayWeather-item-${$numberDayWeather}`)
-    const $activeDayWeather = document.querySelector('.dayWeather-item[is-selected="true"]')
-
-    // Seleccionar y pintar/no pintar el .dayWeather-item
-    $activeDayWeather.removeAttribute('is-selected')
-    $selectionDayWeather.setAttribute('is-selected', true)
-
-    // Mostrar su respectivo summary de lo seleccionado
-    const $summaryInformation = document.querySelector(`#dayWeather-summary-${$numberDayWeather}`)
-    const $summaryInformationSelected = document.querySelector(`.dayWeather-summary:not([hidden])`)
-    $summaryInformation.hidden = false
-    $summaryInformationSelected.hidden = true
-}
-
 
 export default async function weeklyWeather() {
     const $container = document.querySelector('.weeklyWeather')

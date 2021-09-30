@@ -24,6 +24,7 @@ function nextDay(day) {
 }
 
 $tabList.forEach(($tab, index) => {
+    // $tab -> <div class="tab" role="tab" aria-selected="true" id="tab-0"></div>
     $tab.addEventListener('click', handleSelectTabClick)
     if (index === 0) {
         $tab.textContent = 'Hoy'
@@ -36,6 +37,8 @@ $tabList.forEach(($tab, index) => {
 
 function handleSelectTabClick(event) {
     const $tabSelected = event.target
+        // <div class=​"tab" role=​"tab" id=​"tab-3">​Viernes​</div>​
+        // debugger
     const $tabActive = document.querySelector('.tab[aria-selected="true"]')
 
     $tabActive.removeAttribute('aria-selected')

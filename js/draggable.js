@@ -50,32 +50,32 @@ export default function draggable($element, config = defaultConfig) {
     }
 
     function handlePointerMove(event) {
-        logger('Pointer Move')
+        // logger('Pointer Move')
         drag(event)
     }
 
     function handlePointerUp(event) {
-        logger('Pointer OUT')
+        // logger('Pointer OUT')
         dragEnd()
     }
 
     function handlePointerOut(event) {
-        logger('Pointer Out')
+        // logger('Pointer Out')
         dragEnd()
     }
 
     function handlePointerCancel(event) {
-        logger('Pointer Cancel')
+        // logger('Pointer Cancel')
         dragEnd()
     }
 
     function handlePointerDown(event) {
-        logger('Pointer Down')
+        // logger('Pointer Down')
         startDrag(event)
     }
 
     function handleClick(event) {
-        logger('CLICK')
+        // logger('CLICK')
         toggle()
     }
 
@@ -86,7 +86,7 @@ export default function draggable($element, config = defaultConfig) {
     function startDrag(event) {
         isDragging = true
         startY = pageY(event)
-        logger({ startY })
+            // logger({ startY })
     }
 
     function setAnimations() {
@@ -101,7 +101,7 @@ export default function draggable($element, config = defaultConfig) {
     }
 
     function dragEnd() {
-        logger('DRAG END')
+        // logger('DRAG END')
         isDragging = false
         bounce()
     }
@@ -122,14 +122,14 @@ export default function draggable($element, config = defaultConfig) {
     }
 
     function open() {
-        logger('Abrir Widget')
+        // logger('Abrir Widget')
         isOpen = true
         widgetPosition = VISIBLE_Y_POSITION
         setWidgetPosition(widgetPosition)
     }
 
     function close() {
-        logger('Cerrar  Widget')
+        // logger('Cerrar  Widget')
         isOpen = false
         widgetPosition = HIDDEN_Y_POSITION
         setWidgetPosition(widgetPosition)
@@ -148,7 +148,7 @@ export default function draggable($element, config = defaultConfig) {
         if (widgetPosition > HIDDEN_Y_POSITION) {
             return false
         }
-        logger(movementY)
+        // logger(movementY)
         setWidgetPosition(widgetPosition)
     }
 }
