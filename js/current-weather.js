@@ -33,8 +33,14 @@ function setBackground($el, conditionCode, solarStatus) {
     const weatherType = weatherConditionCodes[conditionCode]
 
     // https://developer.mozilla.org/es/docs/Web/API/Window/matchMedia
+    if (window.matchMedia("(min-width: 1200px)").matches) {
+        /* La pantalla tiene al menos 400 píxeles de ancho */
+        $el.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}@3x.jpg)`;
+        return true
+    }
     const size = window.matchMedia('(-webkit-min-device-pixel-ratio:2)').matches ? '@2x' : ''
     $el.style.backgroundImage = `url(./images/${solarStatus}-${weatherType}${size}.jpg)`;
+
 }
 
 function showCurrentWeather($app, $loader) {
